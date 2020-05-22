@@ -61,7 +61,7 @@ summary(lm_forward)
 which.max(summary(lm_forward)$adjr2)
 #SIMILAR FOR BACKWARD SELECTION
 #RIDGE AND LASSO REGRESSION
-install.packages("glmnet")
+#install.packages("glmnet")
 x=model.matrix(price~.,data=df)[,-1]
 y=df$price
 grid=10^seq(10,-2,length=100)
