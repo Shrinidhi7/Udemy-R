@@ -31,7 +31,7 @@ df2<-df[,-7:-10,]
 df<-df2
 rm(df2)
 df<-df[,-14]
-install.packages("dummies")
+#install.packages("dummies")
 df<-dummy.data.frame(df)
 df<-df[,-9]
 df<-df[,-14]
@@ -39,3 +39,9 @@ cor(df)
 round(cor(df),2)
 #PARKS AND AIR QUALITY ARE HIGHLY CO_RELATED and henceone of them is removed to avoid multi-colinearity
 df<-df[,-16]
+#LINEAR REGRESSION
+simple_model<-lm(price~room_num,data=df)
+View(simple_model)
+summary(simple_model)
+plot(df$room_num,df$price)
+abline(simple_model)
