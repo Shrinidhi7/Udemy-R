@@ -1,0 +1,20 @@
+df<-read.csv("C:/Users/lenovo/Documents/DATA/House-Price.csv",header = TRUE)
+summary(df)
+boxplot(df$n_hot_rooms)
+pairs(~df$Sold+df$rainfall)
+uv<-3*quantile(df$n_hot_rooms,0.99)
+df$n_hot_rooms[df$n_hot_rooms>uv]<-uv
+summary(df$n_hot_rooms)
+lv<-0.3*quantile(df$rainfall,0.01)
+df$rainfall[df$rainfall<lv]<-lv
+df$n_hos_beds[is.na(df$n_hos_beds)]<-mean(df$n_hos_beds,na.rm=TRUE)
+summary(df$n_hos_beds)
+df$avg_dist=(df$dist1+df$dist2+df$dist3+df$dist4)/4
+df2<-df[,-6:-9]
+df<-df2
+rm(df2)
+df<-df[,-13]
+df<-dummy.data.frame(df)
+df<-df[,-8]
+df<-df[,-13]
+View(df)
