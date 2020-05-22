@@ -47,3 +47,31 @@ plot(df$room_num,df$price)
 abline(simple_model)
 multiple_model<-lm(price~.,data=df)
 summary(multiple_model)
+
+
+#SUBSET SELECTION
+lm_best=regsubsets(price~.,data=df,nvmax=15)
+summary(lm_best)
+summary(lm_best)$adjr2
+which.max(summary(lm_best)$adjr2)
+coef(lm_best,8)
+# FORWARD SELECTION
+lm_forward=regsubsets(price~.,data=df,nvmax=15,method="forward")
+summary(lm_forward)
+which.max(summary(lm_forward)$adjr2)
+#SIMILAR FOR BACKWARD SELECTION
+#RIDGE AND LASSO REGRESSION
+install.packages("glmnet")
+x=model.matrix(price~.,data=df)[,-1]
+y=df$price
+grid=10^seq(10,-2,length=100)
+lm_ridge=glmnet(x,y,alpha=0,lambda=grid)
+summary(lm_ridge)
+cv_fit=cv.glmnet(x,y,alpha=0,lambda=grid)
+plot(cv_fit)
+opt_lambda<-cv_fit$lambda.min
+tss=sum((y-mean(y))^2)
+y_a<-predict(lm_ridge,s=opt_lambda,newx=x)
+rss=sum((y_a-y)^2)
+rsq=1-rss/tss
+lm_lasso=glmnet(x,y,alpha=1,lambda=grid)
