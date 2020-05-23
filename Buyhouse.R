@@ -27,3 +27,14 @@ View(glm.probs)
 glm.pred=rep("NO",506)
 glm.pred[glm.probs>0.5]="YES"
 table(glm.pred,df$Sold)
+#LINEAR DISCRIMINANT ANALYSIS
+lda.fit=lda(Sold~.,data=df)
+lda.fit
+lda.pred=predict(lda.fit,df)
+lda.pred$posterior
+lda.class=lda.pred$class
+View(lda.pred$class)
+table(lda.class,df$Sold)
+k=sum(lda.pred$posterior[,1]>0.8)
+
+
