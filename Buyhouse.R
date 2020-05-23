@@ -18,3 +18,12 @@ df<-dummy.data.frame(df)
 df<-df[,-8]
 df<-df[,-13]
 View(df)
+#LOGISTIC REGRESSION
+glm.fit=glm(Sold~.,data=df,family=binomial)
+summary(glm.fit)
+glm.probs=predict(glm.fit,type="response")
+glm.probs[1:10]
+View(glm.probs)
+glm.pred=rep("NO",506)
+glm.pred[glm.probs>0.5]="YES"
+table(glm.pred,df$Sold)
