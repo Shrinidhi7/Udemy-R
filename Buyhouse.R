@@ -36,5 +36,13 @@ lda.class=lda.pred$class
 View(lda.pred$class)
 table(lda.class,df$Sold)
 k=sum(lda.pred$posterior[,1]>0.8)
-
-
+#Logistic Regression SPLIT DAtA
+set.seed(0)
+split=sample.split(df,SplitRatio = 0.8)
+training_set=subset(df,split==TRUE)
+test_set=subset(df,split==FALSE)
+train.fit=glm(Sold~.,data=training_set,family=binomial)
+test.probs=predict(train.fit,test_set,type="response")
+test.pred=rep("NO",120)
+test.pred[test.probs>0.5]="YES"
+table(test.pred,test_set$Sold)
