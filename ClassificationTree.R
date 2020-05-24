@@ -1,0 +1,12 @@
+df<-read.csv("C:/Users/lenovo/Documents/DATA/Movie_classification.csv",header = TRUE)
+summary(df)
+df$Time_taken[is.na(df$Time_taken)]<-mean(df$Time_taken,na.rm=TRUE)
+set.seed(0)
+split=sample.split(df,SplitRatio = 0.8)
+train=subset(df,split==TRUE)
+test=subset(df,split==FALSE)
+#CLASSIFICATION TREE
+classtree<-rpart(formula=Start_Tech_Oscar~.,data=train,method="class",control=rpart.control(maxdepth=3))
+rpart.plot(classtree)
+test$pred=predict(classtree,test,type="class")
+table(test$Start_Tech_Oscar,test$pred)
