@@ -1,4 +1,4 @@
-install.packages("gbm")
+#install.packages("gbm")
 
 movie<-read.csv("C:/Users/lenovo/Documents/DATA/Movie_regression.csv",header=TRUE)
 movie$Time_taken[is.na(movie$Time_taken)]<-mean(movie$Time_taken,na.rm=TRUE
@@ -14,7 +14,7 @@ boosting=gbm(Collection~.,data=train,distribution="gaussian",n.trees=500,interac
 test$resultgbm<-predict(boosting,test,n.trees=500)
 MSE2boost=mean((test$Collection-test$resultgbm)^2)
 #adaboost
-install.packages("adabag")
+#install.packages("adabag")
 df<-read.csv("C:/Users/lenovo/Documents/DATA/Movie_classification.csv",header = TRUE)
 df$Time_taken[is.na(df$Time_taken)]<-mean(df$Time_taken,na.rm=TRUE)
 set.seed(0)
@@ -29,7 +29,7 @@ t1<-adaboost$trees[[1]]
 plot(t1)
 text(t1)
 #XG Boost
-install.packages("xgboost")
+#install.packages("xgboost")
 trainY=trainC$Start_Tech_Oscar=="1"
 trainX<-model.matrix(Start_Tech_Oscar~.-1,data=trainC)
 trainX<-trainX[,-12]
@@ -38,6 +38,6 @@ testX<-model.matrix(Start_Tech_Oscar~.-1,data=testC)
 testX<-testX[,-12]
 Xmatrix<-xgb.DMatrix(data=trainX,label=trainY)
 Xmatrix_t<-xgb.DMatrix(data=testX,label=testY)
-Xgboosting=xgboost(data=Xmatrix,nround=50,objective="multi:softmax",eta=0.3,num_class=2,max_depth=100)
+Xgboosting=xgboost(data=Xmatrix,nround=50,objective="multi:softmax",eta=0.3,num_class=2,max_depth=100
 xgpred<-predict(Xgboosting,Xmatrix_t)
 table(testY,xgpred)
