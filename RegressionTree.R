@@ -6,8 +6,8 @@ boxplot(movie$Marketing.expense)
 #Test-Train Split
 set.seed(0)
 split=sample.split(movie,SplitRatio=0.8)
-train=subset(movie,split=TRUE)
-test=subset(movie,split=FALSE)
+train=subset(movie,split==TRUE)
+test=subset(movie,split==FALSE)
 install.packages("rpart")
 install.packages("rpart.plot")
 #Decision Tree
